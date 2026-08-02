@@ -2,8 +2,8 @@ name: Generate and Update NOAA Plots
 
 on:
   schedule:
-    # Runs every 12 hours (adjust cron as needed)
-    - cron: '0 */12 * * *'
+    # Runs every hour (adjust cron as needed)
+    - cron: '0 */1 * * *'
   workflow_dispatch: # Allows you to run this manually from the Actions tab
 
 jobs:
