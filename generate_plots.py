@@ -6,14 +6,23 @@ import os
 
 def plot_xray_flux(df, title, ylabel, fig_name):
     """Helper function to plot GOES X-ray flux data."""
-    fig, ax = plt.subplots(figsize=(12, 6))
+      fig, ax = plt.subplots(figsize=(12, 6))
     ax.plot(df['time_tag'], df['flux'], label=df['energy'].iloc[0], color='red')
     ax.set_yscale('log')
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+
+    # Show date and time on the x-axis (includes date when needed)
+    locator = mdates.AutoDateLocator()
+    formatter = mdates.ConciseDateFormatter(locator)
+    ax.xaxis.set_major_locator(locator)
+    ax.xaxis.set_major_formatter(formatter)
     fig.autofmt_xdate()
+
+    # Fix y-axis limits to [1e-8, 1e-3]
+    ax.set_ylim(1e-8, 1e-3)
+
     ax.set_title(title)
     ax.set_xlabel('Time (UTC)')
-    ax.set_ylabel(ylabel)
+    ax.set_ylabel('GOES X 1-min X-ray [W/m^2]')
     ax.legend(loc='upper right')
     ax.grid(True, which="major", linestyle="-", alpha=0.6)
     ax.grid(True, which="minor", linestyle="--", alpha=0.3)
